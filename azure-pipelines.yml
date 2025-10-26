@@ -3,3 +3,23 @@ trigger:
 
 pool:
   vmImage: 'ubuntu-latest'
+
+stage:
+  - stage: Build
+    jobs:
+      - job: BuildJob
+        steps:
+          - script: echo "Building the project..."
+            displayName: 'Build Step'
+          - script: echo "Running tests..."
+            displayName: 'Test Step'
+  
+  - stage: Deploy
+    dependsOn: Build
+    jobs:
+      - job: DeployJob
+        steps:
+          - script: echo "Deploying the project..."
+            displayName: 'Deploy Step'
+          - script: echo "Deployment complete."
+            displayName: 'Completion Step'
